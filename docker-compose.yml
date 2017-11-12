@@ -1,0 +1,40 @@
+version : "3"
+services : 
+  foursquare-connector :
+    build : ./build/FoursquareConnector/
+    image : foursquare-connector
+    network_mode: "host"
+    ports : 
+      - 6006:6006
+  twitter-connector :
+    build : ./build/TwitterConnector/
+    image : twitter-connector
+    network_mode: "host"
+    ports :
+      - 7777:7777
+    depends_on :
+      - socialdata-service
+  facebook-connector :
+    build : ./build/FacebookConnector/
+    image : facebook-connector
+    network_mode : "host"
+    ports :
+      - 6001:6001
+  socialdata-service :
+    build : ./build/SocialDataService/
+    image : socialdata-service
+    network_mode: "host"
+    ports : 
+     - 5005:5005
+  crowdflow-prediction :
+    build : ./build/CrowdflowPrediction/
+    image : crowdflow-prediction
+    network_mode: "host"
+    ports :
+      - 5050:5050
+  sentimental-prediction :
+    build : ./build/SentimentalPrediction/
+    image : sentimental-prediction
+    network_mode: "host"
+    ports :
+      - 5006:5006
