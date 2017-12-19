@@ -1,0 +1,11 @@
+pythainlp==1.2
+flask
+pymongo
+weka
+numpy==1.12.0
+javabridge==1.0.14
+scikit-learn
+scipy
+requests
+schedule
+python-weka-wrapper3
