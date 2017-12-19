@@ -8,8 +8,8 @@ WORKDIR /app
 ADD . /app
 
 # Install any needed packages specified in requirements.txt
-RUN apt-get update
-RUN apt-get install nano net-tools
+# RUN apt-get update
+# RUN apt-get install nano net-tools
 RUN pip install pymongo flask
 
 # Set timezone 

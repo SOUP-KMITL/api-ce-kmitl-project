@@ -6,9 +6,9 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD . /app
 
-RUN apt-get update
-RUN apt-get install nano net-tools
-#RUN npm install forever babel-cli
+# RUN apt-get update
+# RUN apt-get install nano net-tools
+# RUN npm install forever babel-cli
 
 # Set timezone 
 ENV TZ=Asia/Bangkok 

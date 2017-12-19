@@ -9,7 +9,7 @@ ADD . /app
 
 # Install any needed packages specified in requirements.txt
 RUN apt-get update
-RUN apt-get install nano net-tools build-essential libicu-dev software-properties-common -y
+RUN apt-get install build-essential libicu-dev software-properties-common -y
 RUN add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y
 RUN apt-get update
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
