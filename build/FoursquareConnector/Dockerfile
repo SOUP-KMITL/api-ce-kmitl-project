@@ -15,7 +15,7 @@ ENV TZ=Asia/Bangkok
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Set localhost 
-#RUN echo '127.0.0.1   localhost localhost.localdomain' >> /etc/hosts
+RUN echo '127.0.0.1   localhost localhost.localdomain' >> /etc/hosts
 
 EXPOSE 6006
 
