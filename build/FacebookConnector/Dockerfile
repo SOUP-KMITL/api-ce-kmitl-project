@@ -9,6 +9,7 @@ ADD . /app
 # RUN apt-get update
 # RUN apt-get install nano net-tools
 # RUN npm install forever babel-cli
+# งวย
 
 # Set timezone 
 ENV TZ=Asia/Bangkok 
