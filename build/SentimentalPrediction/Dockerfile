@@ -15,7 +15,7 @@ RUN apt-get update
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 RUN apt-get install oracle-java8-installer -y
-RUN chmod +x install.sh
+RUN chmod +x install-packages.sh
 RUN ./install-packages.sh
 
 # Set timezone 
