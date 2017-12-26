@@ -7,6 +7,7 @@ import dateutil.parser as date
 import json
 from pymongo import MongoClient 
 from pprint import pprint
+from config import dbName
 
 #spark = SparkSession\
 #    .builder\
@@ -29,7 +30,7 @@ from pprint import pprint
 #    return sd_list
 
 def getTweetDataByStartAndEnd(start, end):
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     tweet_collection = db.tweet
     tweets = tweet_collection.find({"created_at": {"$gte": date.parse(start), "$lte": date.parse(end)}})
@@ -49,7 +50,7 @@ def getTweetDataByStartAndEnd(start, end):
 #    return sd_list
 
 def getThingStations():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['Environment']
     collection = db.ThingStation
     data = collection.find({},{'_id':0})
@@ -59,7 +60,7 @@ def getThingStations():
     return data_list
 
 def getTelemetryByThingId():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['Environment']
     collection = db.ThingTelemetry
     data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
@@ -69,7 +70,7 @@ def getTelemetryByThingId():
     return data_list
 
 def getTaxiData():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SmartMobility']
     collection = db.taxiData
     data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
@@ -79,7 +80,7 @@ def getTaxiData():
     return data_list
 
 def getTaxiDensity():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SmartMobility']
     collection = db.taxiDensity
     data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
@@ -89,7 +90,7 @@ def getTaxiDensity():
     return data_list
 
 def getAllQuery():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     query_collection = db.query
     query = query_collection.find()
@@ -100,7 +101,7 @@ def getAllQuery():
     return query_list
 
 def getPlaceById(place_id):
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     place_collection = db.place2
     place = place_collection.find({"place_id":place_id})
@@ -111,7 +112,7 @@ def getPlaceById(place_id):
     return place_list
 
 def getAllLocations():
-    client = MongoClient('mongodb://127.0.0.1:27017/')     
+    client = MongoClient(dbName)     
     db = client['SocialData']     
     place_collection = db.place2
     place = place_collection.find()
@@ -125,7 +126,7 @@ def getAllLocations():
     return place_list
 
 def get_predicted():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     predicted_collection = db.predicted
     predicted = predicted_collection.find({'predicted':{'$gt':[]}}).sort("_id", -1).limit(1)
@@ -135,7 +136,7 @@ def get_predicted():
     return predicted
 
 def save_predicted(predicted):
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     predicted_collection = db.predicted
     result = predicted_collection.insert_one({'id': predicted['id'], 'predicted': predicted['predicted']}).inserted_id
