@@ -80,14 +80,14 @@ export function searchTweetNearby(lat, lng, since) {
 //   })
 // }
 
-function sendToHadoop(data) {
-  axios.post('http://localhost:5123/twitter/addTweet', {twitter: data})
-  .then(response => {
-    // console.log(response)
-  }).catch(err => {
-    // console.log(err)
-  })
-}
+// function sendToHadoop(data) {
+//   axios.post('http://localhost:5123/twitter/addTweet', {twitter: data})
+//   .then(response => {
+//     // console.log(response)
+//   }).catch(err => {
+//     // console.log(err)
+//   })
+// }
 
 function saveTweet(data, place_id) {
 data.statuses.forEach(item => {
@@ -119,7 +119,7 @@ data.statuses.forEach(item => {
 // save tweets every 30 second
 let saveTweetJob = new cronJob('*/5 * * * *', () => {
   let all_tweets = []
-  axios.get('http://localhost:5005/query').then((response) => {
+  axios.get('http://socialdata-service/query').then((response) => {
     response.data.queries.forEach((item, idx) => {
         T.get('search/tweets', {
             q: item.keyword,
@@ -134,9 +134,9 @@ let saveTweetJob = new cronJob('*/5 * * * *', () => {
                 tweet.query = item
                 all_tweets.push(tweet)
                 saveTweet(data, item.place_id)
-                if(idx == response.data.queries.length - 1) {
-                    sendToHadoop(all_tweets)
-                }
+                // if(idx == response.data.queries.length - 1) {
+                //     sendToHadoop(all_tweets)
+                // }
             }
         })
     })

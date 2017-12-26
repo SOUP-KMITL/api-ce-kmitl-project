@@ -1,6 +1,6 @@
 import mongojs from 'mongojs'
 
-let databaseUrl = '127.0.0.1/SocialData'
+let databaseUrl = 'mongo/SocialData'
 let collections = ['tweetQuery', 'tweet', 'tweetSpecific']
 
 export const db = mongojs(databaseUrl, collections)
