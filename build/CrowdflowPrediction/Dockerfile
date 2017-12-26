@@ -8,16 +8,11 @@ WORKDIR /app
 ADD . /app
 
 # Install any needed packages specified in requirements.txt
-# RUN apt-get update
-# RUN apt-get install nano net-tools
 RUN pip install pymongo flask
 
 # Set timezone 
 ENV TZ=Asia/Bangkok 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Set localhost 
-RUN echo '127.0.0.1   localhost localhost.localdomain' >> /etc/hosts
 
 # Make port 80 available to the world outside this container
 EXPOSE 5050

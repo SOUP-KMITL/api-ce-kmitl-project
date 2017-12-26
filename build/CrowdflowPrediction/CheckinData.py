@@ -1,8 +1,9 @@
 from pymongo import MongoClient
+from config import dbName
 import datetime
 import DenseTableFqCheckin
 
-client = MongoClient("127.0.0.1")
+client = MongoClient(dbName)
 db = client.SocialData
 fqDb = db.FQ_CHECKIN
 db2 = client.Predict

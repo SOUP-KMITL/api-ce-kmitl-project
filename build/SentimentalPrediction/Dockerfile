@@ -21,9 +21,6 @@ RUN ./install-packages.sh
 ENV TZ=Asia/Bangkok 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Set localhost
-RUN echo '127.0.0.1   localhost localhost.localdomain' >> /etc/hosts
-
 # Make port 80 available to the world outside this container
 EXPOSE 5006
 

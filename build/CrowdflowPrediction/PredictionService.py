@@ -6,6 +6,7 @@ import datetime
 import math
 import FlowPrediction
 from pymongo import MongoClient
+from config import dbName
 
 ladkrabang = ['4df8d001814dd2985fdd35d8','4bf774814a67c9288ec623cf','4bb9a4a198c7ef3b61373202','4af833a6f964a5205a0b22e3','4c034d0cf56c2d7fa6c71c66']
 
@@ -53,7 +54,7 @@ def getCurrentDensityByLocationName(name):
     return dense
 
 def getCurrentDensityByLocationZone(zone):
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     place_collection = db.place2
     place = place_collection.find({'zone':zone},{'venue_id':1})
