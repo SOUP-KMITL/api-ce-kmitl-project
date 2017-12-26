@@ -2,12 +2,13 @@
 from flask import Flask, request, jsonify
 import json
 from pymongo import MongoClient
+from config import dbName
 
 app = Flask(__name__)
 
 @app.route("/predicted", methods=['GET'])
 def get_predicted():
-    client = MongoClient('mongodb://127.0.0.1:27017/')
+    client = MongoClient(dbName)
     db = client['SocialData']
     predicted_collection = db.predicted
     predicted = predicted_collection.find().sort("_id", -1).limit(1)

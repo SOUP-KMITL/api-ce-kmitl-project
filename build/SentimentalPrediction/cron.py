@@ -12,8 +12,9 @@ import uuid
 import random
 import json
 from random import randint
+from config import dbName, socialDataService
 
-client = MongoClient('mongodb://127.0.0.1:27017/')
+client = MongoClient(dbName)
 db = client['SocialData']
 tweet_collection = db.tweet
 predicted_collection = db.predicted
@@ -82,8 +83,8 @@ def summarize(data, pred_list):
             temp['surprise'] = format(0, '.2f')
             temp['anticipation'] = format(0, '.2f')
             temp['acceptance'] = format(0, '.2f')
-        # geolocation = requests.get('http://localhost:5005/place', {'place_id': key}).json()['place'][0]['geolocation']
-        place = requests.get('http://localhost:5005/place', {'place_id': key}).json()['place'][0]
+        # geolocation = requests.get('http://' + socialDataService + '/place', {'place_id': key}).json()['place'][0]['geolocation']
+        place = requests.get('http://' + socialDataService + '/place', {'place_id': key}).json()['place'][0]
         geolocation = place['geolocation']
         geolocation = geolocation.split(',')
         temp['zone'] = place['zone']
@@ -148,7 +149,7 @@ def predict_cron():
     start = start - timedelta(hours=7)
     end = datetime.today()
     end = end - timedelta(hours=7)
-    tweets = requests.get('http://localhost:5005/tweet/date?start=' + str(start) + '&end=' + str(end))
+    tweets = requests.get('http://' + socialDataService + '/tweet/date?start=' + str(start) + '&end=' + str(end))
     pred_list = []
     for tw in tweets.json()['tweets']:
         temp = []
@@ -207,7 +208,7 @@ def predict_cron():
     predicted = summarize(place_with_pred, pred_list)
     predicted_id = str(uuid.uuid4())
     # predicted_collection.insert_one({'id': predicted_id, 'predicted': predicted}).inserted_id
-    r = requests.post('http://localhost:5005/predicted/save', data = json.dumps({'id': predicted_id, 'predicted': predicted}))
+    r = requests.post('http://' + socialDataService + '/predicted/save', data = json.dumps({'id': predicted_id, 'predicted': predicted}))
     
 
 schedule.every(5).minutes.do(predict_cron)
