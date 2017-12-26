@@ -15,7 +15,7 @@ RUN sudo apt-get update
 RUN sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 RUN sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 RUN sudo apt-get install oracle-java8-installer -y
-RUN sudo ./install-packages.sh
+RUN ./install-packages.sh
 
 # Set timezone 
 ENV TZ=Asia/Bangkok 
