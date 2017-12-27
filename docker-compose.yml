@@ -3,6 +3,8 @@ services :
   foursquare-connector :
     build : ./build/FoursquareConnector/
     image : worker-01:5000/foursquare-connector
+    networks: 
+      - default
     extra_hosts :
       - "mongo:172.16.0.6"
     restart: always
@@ -11,6 +13,8 @@ services :
   twitter-connector :
     build : ./build/TwitterConnector/
     image : worker-01:5000/twitter-connector
+    networks: 
+      - default
     extra_hosts :
       - "mongo:172.16.0.6"
     restart: always
@@ -21,6 +25,8 @@ services :
   facebook-connector :
     build : ./build/FacebookConnector/
     image : worker-01:5000/facebook-connector
+    networks: 
+      - default
     network_mode : "host"
     restart: always
     ports :
@@ -28,6 +34,8 @@ services :
   socialdata-service :
     build : ./build/SocialDataService/
     image : worker-01:5000/socialdata-service
+    networks: 
+      - default
     extra_hosts :
       - "mongo:172.16.0.6"
     restart: always
@@ -36,6 +44,8 @@ services :
   crowdflow-prediction :
     build : ./build/CrowdflowPrediction/
     image : worker-01:5000/crowdflow-prediction
+    networks: 
+      - default
     extra_hosts :
       - "mongo:172.16.0.6"
     restart: always
@@ -44,6 +54,8 @@ services :
   sentimental-prediction :
     build : ./build/SentimentalPrediction/
     image : worker-01:5000/sentimental-prediction
+    networks: 
+      - default
     extra_hosts :
       - "mongo:172.16.0.6"
     restart: always
