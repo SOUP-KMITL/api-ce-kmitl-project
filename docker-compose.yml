@@ -49,3 +49,8 @@ services :
     restart: always
     ports :
       - 5006:5006
+
+networks:
+  default:
+    attachable: true
+    driver: store/weaveworks/net-plugin:latest_release
