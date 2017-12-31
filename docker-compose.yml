@@ -27,7 +27,6 @@ services :
     image : worker-01:5000/facebook-connector
     networks: 
       - default
-    network_mode : "host"
     restart: always
     ports :
       - 6001:6001
@@ -64,5 +63,4 @@ services :
 
 networks:
   default:
-    attachable: true
     driver: store/weaveworks/net-plugin:latest_release

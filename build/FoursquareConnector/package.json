@@ -1,11 +1,9 @@
 {
   "name": "foursquare_connector",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "forever -c node_modules/.bin/babel-node index.js --exec babel-node --presets es2015"
-
   },
   "author": "",
   "license": "ISC",
@@ -25,5 +23,6 @@
   },
   "devDependencies": {
     "nodemon": "^1.10.0"
-  }
+  },
+  "description": ""
 }
