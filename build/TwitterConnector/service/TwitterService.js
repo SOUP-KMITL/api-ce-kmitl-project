@@ -1,7 +1,8 @@
 import Twit from 'twit'
-import {db} from '../db'
+import {db} from '../config'
 import cron from 'cron'
 import axios from 'axios'
+import {postToConnector} from 'connector'
 
 let cronJob = cron.CronJob
 
@@ -106,6 +107,7 @@ data.statuses.forEach(item => {
                 tweet.text = item.retweeted_status.text
             }
             tweet.place_id = place_id
+            postToConnector(tweet)
             db.tweet.insert(tweet, err => {
                 if (err) {
                     console.log(err)
