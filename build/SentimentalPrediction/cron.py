@@ -93,7 +93,7 @@ def summarize(data, pred_list):
         temp['place_id'] = place['place_id']
         temp['latitude'] = float(geolocation[0])
         temp['longitude'] = float(geolocation[1])
-        temp[moods[randint(0, 7)]] = 100.00
+        #temp[moods[randint(0, 7)]] = 100.00
         max_emo_list = find_summarize_max_emo(temp)
         temp['max_emo'] = pickMaxEmo(max_emo_list)
         temp['predicted_texts'] = predicted_text_summarize(max_emo_list, pred_list, key)

@@ -1,1 +1,1 @@
-dbName = "mongodb://mongo"
+dbName = "mongodb://mongo:27017"
