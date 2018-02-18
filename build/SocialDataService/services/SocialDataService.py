@@ -125,13 +125,14 @@ def getAllLocations():
         place_list.append(p)
     return place_list
 
-def getLatestTweets():
+def getLastestTweets():
     client = MongoClient(dbName)     
     db = client['SocialData']     
     place_collection = db.place2
     place = place_collection.find()
     tweet_collection = db.tweet
     tweet_list = []
+    tweet = {}
     for p in place:
         tweet['place_name'] = p['name']
         coord = (p['geolocation']).split(",")
@@ -139,7 +140,7 @@ def getLatestTweets():
         tweet['lat'] = coord[0]
         tweet['lng'] = coord[1]
         # tweet['text'] = tweet_collection.find({"place_id": p['place_id']}, {'text':{'$gt':[]}}).sort({_id:-1}).limit(1)
-        tweet['text'] = tweet_collection.find({"place_id": p['place_id']}).sort({'_id':-1}).limit(1)
+        tweet['text'] = tweet_collection.find({"place_id": p['place_id']},{'_id':0,'text':1}).sort({'_id':-1}).limit(1)
         tweet_list.append(tweet)
     return tweet_list    
 

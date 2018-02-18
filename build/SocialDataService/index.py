@@ -78,10 +78,10 @@ def getAllLocations():
     place['place'] = SocialDataService.getAllLocations()     
     return jsonify(place)
 
-@app.route("/getLatestTweets", methods=['GET']) 
+@app.route("/getLastestTweets", methods=['GET']) 
 def getLatestTweets():     
     result = {}     
-    result = SocialDataService.getLatestTweets()     
+    result = SocialDataService.getLastestTweets()     
     return jsonify(result)
 
 @app.route("/predicted", methods=['GET'])
