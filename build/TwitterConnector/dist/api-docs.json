@@ -5,8 +5,9 @@
     "title": "Twitter Connector",
     "description": "All things you can use in this API"
   },
+  "host": "203.154.59.55:7777",
   "basePath": "/twitter",
-  "tags" : [
+  "tags": [
     {
       "name": "Twitter",
       "description": "API for connecting Twitter"
@@ -22,144 +23,11 @@
     "application/json"
   ],
   "paths": {
-    "/path/to/method": {
-      "post": {
-        "tags": ["Twitter"],
-        "description": "what this API does",
-        "operationId": "for the URL",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Job Parameters",
-            "in": "body",
-            "description": "Job to add to the database",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/create"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "create response",
-            "schema": {
-              "$ref": "#/definitions/response"
-            }
-          }
-        }
-      }
-    },
-    "/path/to/method/{someVariable}": {
-      "delete":{
-        "tags":["Twitter"],
-        "description":"Deletes a something",
-        "operationId":"delete",
-        "produces": [
-          "application/json"
-        ],
-        "parameters":[
-          {
-            "name": "someVariable",
-            "in": "path",
-            "description": "ID to delete",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "delete response",
-            "schema":{
-              "$ref":"#/definitions/deleteRes"
-            }
-          }
-        }
-      },
-      "get":{
-        "tags": [ "Twitter"],
-        "description": "Returns the status of something",
-        "operationId": "findById",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "description": "ID to fetch",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "response",
-            "schema": {
-              "$ref": "#/definitions/response1"
-            }
-          }
-        }
-      }
-    },
-    "/": {
-      "get":{
-        "tags": [ "Twitter"],
-        "description": "Home page",
-        "operationId": "",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "response"
-          }
-        }
-      }
-    },
-    "/index": {
-      "get":{
-        "tags": [ "Twitter"],
-        "description": "index page",
-        "operationId": "",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "response"
-          }
-        }
-      }
-    },
-    "/tweet": {
-      "post":{
-        "tags": [ "Twitter"],
-        "description": "Tweet something to an account",
-        "operationId": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "body",
-            "description": "Tweet",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "response"
-          }
-        }
-      }
-    },
     "/searchTweet": {
-      "get":{
-        "tags": [ "Twitter"],
+      "get": {
+        "tags": [
+          "Twitter"
+        ],
         "description": "Seacrh tweets with any keywords",
         "operationId": "",
         "produces": [
@@ -182,8 +50,10 @@
       }
     },
     "/searchAndSaveTweet": {
-      "get":{
-        "tags": [ "Twitter"],
+      "get": {
+        "tags": [
+          "Twitter"
+        ],
         "description": "Seacrh and save tweets with any keywords",
         "operationId": "",
         "produces": [
@@ -206,8 +76,10 @@
       }
     },
     "/searchTweetNearby": {
-      "get":{
-        "tags": [ "Twitter"],
+      "get": {
+        "tags": [
+          "Twitter"
+        ],
         "description": "Seacrh tweets with latitude and longgitude",
         "operationId": "",
         "produces": [
@@ -241,13 +113,13 @@
     "create": {
       "properties": {
         "eventId": {
-          "required":true,
+          "required": true,
           "type": "string",
           "example": "mathmaticial"
         },
         "numberRequired": {
-          "required":true,
-          "type":"integer",
+          "required": true,
+          "type": "integer",
           "format": "int64",
           "example": 500
         }
@@ -256,15 +128,15 @@
     "response1": {
       "properties": {
         "jobID": {
-          "required":true,
+          "required": true,
           "type": "string",
           "example": "23423456543"
         },
         "request": {
-          "required":true,
+          "required": true,
           "type": "schema",
           "example": {
-            "eventId":"mathmaticial",
+            "eventId": "mathmaticial",
             "numberRequired": 500
           }
         }
@@ -274,8 +146,8 @@
       "properties": {
         "jobID": {
           "required": true,
-          "type" : "string",
-          "example" : "12321432423"
+          "type": "string",
+          "example": "12321432423"
         }
       }
     },
@@ -283,21 +155,21 @@
       "properties": {
         "jobID": {
           "required": true,
-          "type" : "string",
-          "example" : "234344234234"
+          "type": "string",
+          "example": "234344234234"
         },
-        "status" : {
+        "status": {
           "required": true,
           "type": "string",
           "example": "deleted"
         }
       }
     },
-    "400error" : {
+    "400error": {
       "properties": {
         "message": {
           "type": "string",
-          "example" : "400 Bad Request"
+          "example": "400 Bad Request"
         }
       }
     }

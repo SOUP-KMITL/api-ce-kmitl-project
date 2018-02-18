@@ -6,7 +6,7 @@
     "description": "All things you can use in this API"
   },
   "basePath": "/",
-  "tags" : [
+  "tags": [
     {
       "name": "Foursquare",
       "description": "API for connecting Foursquare"
@@ -23,8 +23,10 @@
   ],
   "paths": {
     "/foursquare/searchVenues": {
-      "get":{
-        "tags": [ "Foursquare"],
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "search venue in area by given geolocation",
         "operationId": "",
         "produces": [
@@ -46,9 +48,11 @@
         }
       }
     },
-     "/foursquare/herenow": {
-      "get":{
-        "tags": [ "Foursquare"],
+    "/foursquare/herenow": {
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "get current number of user in venue",
         "operationId": "",
         "produces": [
@@ -71,8 +75,10 @@
       }
     },
     "/foursquare/nextVenue": {
-      "get":{
-        "tags": [ "Foursquare"],
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "next venue user usually go from current venue",
         "operationId": "",
         "produces": [
@@ -95,8 +101,10 @@
       }
     },
     "/foursquare/venueTips": {
-      "get":{
-        "tags": [ "Foursquare"],
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "tips about the venue",
         "operationId": "",
         "produces": [
@@ -119,8 +127,10 @@
       }
     },
     "/foursquare/venueHours": {
-      "get":{
-        "tags": [ "Foursquare"],
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "popular hours on the venue",
         "operationId": "",
         "produces": [
@@ -142,9 +152,11 @@
         }
       }
     },
-     "/foursquare/trendingVenue": {
-      "get":{
-        "tags": [ "Foursquare"],
+    "/foursquare/trendingVenue": {
+      "get": {
+        "tags": [
+          "Foursquare"
+        ],
         "description": "get Detail of given PageID",
         "operationId": "",
         "produces": [
@@ -163,71 +175,6 @@
           "200": {
             "description": "response"
           }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "create": {
-      "properties": {
-        "eventId": {
-          "required":true,
-          "type": "string",
-          "example": "mathmaticial"
-        },
-        "numberRequired": {
-          "required":true,
-          "type":"integer",
-          "format": "int64",
-          "example": 500
-        }
-      }
-    },
-    "response1": {
-      "properties": {
-        "jobID": {
-          "required":true,
-          "type": "string",
-          "example": "23423456543"
-        },
-        "request": {
-          "required":true,
-          "type": "schema",
-          "example": {
-            "eventId":"mathmaticial",
-            "numberRequired": 500
-          }
-        }
-      }
-    },
-    "response": {
-      "properties": {
-        "jobID": {
-          "required": true,
-          "type" : "string",
-          "example" : "12321432423"
-        }
-      }
-    },
-    "delete": {
-      "properties": {
-        "jobID": {
-          "required": true,
-          "type" : "string",
-          "example" : "234344234234"
-        },
-        "status" : {
-          "required": true,
-          "type": "string",
-          "example": "deleted"
-        }
-      }
-    },
-    "400error" : {
-      "properties": {
-        "message": {
-          "type": "string",
-          "example" : "400 Bad Request"
         }
       }
     }
