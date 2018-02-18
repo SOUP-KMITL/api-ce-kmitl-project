@@ -140,7 +140,7 @@ def getLastestTweets():
         tweet['lat'] = coord[0]
         tweet['lng'] = coord[1]
         # tweet['text'] = tweet_collection.find({"place_id": p['place_id']}, {'text':{'$gt':[]}}).sort({_id:-1}).limit(1)
-        tweet['text'] = tweet_collection.find({"place_id": p['place_id']},{'_id':0,'text':1}).sort({'_id':-1}).limit(1)
+        tweet['text'] = tweet_collection.find({"place_id": p['place_id']},{'text':1}).sort({'_id':-1}).limit(1)
         tweet_list.append(tweet)
     return tweet_list    
 
