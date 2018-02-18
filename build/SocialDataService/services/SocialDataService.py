@@ -132,8 +132,8 @@ def getLastestTweets():
     place = place_collection.find()
     tweet_collection = db.tweet
     tweet_list = []
-    tweet = {}
     for p in place:
+        tweet = {}
         tweet['place_name'] = p['name']
         coord = (p['geolocation']).split(",")
         tweet['geolocation'] = p['geolocation']
@@ -143,6 +143,7 @@ def getLastestTweets():
         tweet_cursor = tweet_collection.find({"place_id": p['place_id']},{'_id':0, 'text':1}).sort('_id',-1).limit(1)
         for t in tweet_cursor:
             tweet['text'] = t['text']
+            tweet['created_at'] = t['created_at']
         tweet_list.append(tweet)
     return tweet_list    
 
