@@ -70,26 +70,6 @@ export function searchTweetNearby(lat, lng, since) {
     })
 }
 
-// function sendToHadoop(data, query) {
-//   axios.post('http://localhost:5001/twitter/addTweet', {
-//     tweets: data.statuses,
-//     query: query
-//   }).then(function (response) {
-//     // console.log(response)
-//   }).catch(err => {
-//     console.log(err)
-//   })
-// }
-
-// function sendToHadoop(data) {
-//   axios.post('http://localhost:5123/twitter/addTweet', {twitter: data})
-//   .then(response => {
-//     // console.log(response)
-//   }).catch(err => {
-//     // console.log(err)
-//   })
-// }
-
 function saveTweet(data, place_id) {
 data.statuses.forEach(item => {
     db.tweet.findOne({
