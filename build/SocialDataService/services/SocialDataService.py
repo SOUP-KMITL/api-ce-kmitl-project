@@ -147,6 +147,17 @@ def getLastestTweets():
         tweet_list.append(tweet)
     return tweet_list    
 
+def getLastestTweetByLocation(name):
+    client = MongoClient(dbName)     
+    db = client['SocialData']     
+    tweet_collection = db.tweet
+    tweet = tweet_collection.find({"name_id": name},{'_id':0, 'text':1, 'created_at':1}).sort('_id',-1).limit(1)
+    tweet_list = []
+    for t in tweet:
+        tweet_list['text'] = t['text'] 
+        tweet_list.append(tweet)
+    return tweet_list  
+
 def get_predicted():
     client = MongoClient(dbName)
     db = client['SocialData']

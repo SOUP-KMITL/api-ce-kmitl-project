@@ -6,9 +6,77 @@ import datetime
 
 app = Flask(__name__)
 
+# @app.route("/socialdata/date", methods=['GET'])
+# def getSocialDataByStartAndEnd():
+#     start = request.args.get('start')
+#     end = request.args.get('end')
+#     data = SocialDataService.getSocialDataByStartAndEnd(start, end)
+#     socials = {}
+#     socials['socials'] = data
+#     return jsonify(socials)
+
 @app.route("/", methods=['GET'])
 def index():
     return "SocialDataService"
+
+@app.route("/facebook/getPageDetail", methods=['GET'])
+def facebookGetPageDetail():
+    pageId = request.args.get('pageID')
+    r = requests.get('203.154.59.55:6001/facebook/getPageDetail')
+    return r.json()
+
+@app.route("/facebook/getUserDetail", methods=['GET'])
+def facebookGetUserDetail():
+    userId = request.args.get('userID')
+    r = requests.get('203.154.59.55:6001/facebook/getUserDetail?userID=' + userId)
+    return r.json()
+
+@app.route("/facebook/getFeedByPageID", methods=['GET'])
+def facebookGetFeedByPageID():
+    pageId = request.args.get('pageID')
+    since = request.args.get('since')
+    until = request.args.get('until')
+    r = requests.get('203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since+'$until='+until)
+    return r.json()
+
+@app.route("/facebook/getCommentByPostID", methods=['GET'])
+def facebookGetCommentByPostID():
+    postId = request.args.get('postID')
+    r = requests.get('203.154.59.55:6001/facebook/getCommentByPostID?postID='+postId)
+    return r.json()
+
+@app.route("/twitter/getLastestTweets", methods=['GET']) 
+def getLatestTweets():     
+    result = {}     
+    result = SocialDataService.getLastestTweets()     
+    return jsonify(result)
+
+@app.route("/twitter/getLastestTweetByLocation", methods=['GET']) 
+def getLastestTweetByLocation():     
+    result = {}     
+    result = SocialDataService.getLastestTweetByLocation(request.args.get('name'))     
+    return jsonify(result)
+
+@app.route("/crowdflow/getLocations", methods=['GET'])
+def crowdflowGetLocations():
+    postId = request.args.get('postID')
+    r = requests.get('203.154.59.55:5050/facebook/getCommentByPostID?postID='+postId)
+    return r.json()
+
+@app.route("/crowdflow/density/random", methods=['GET'])
+def crowdflowGetRandom():
+    r = requests.get('203.154.59.55:5050/crowdflow/random')
+    return r.json()
+
+@app.route("/sentimental/getAllLocations", methods=['GET']) 
+def sentimentalGetAllLocations():     
+    r = requests.get('203.154.59.55:5005/getAllLocations')
+    return r.json()
+
+@app.route("/sentimental/predicted", methods=['GET'])
+def sentimentalGet_predicted():
+    r = requests.get('203.154.59.55:5005/predicted')
+    return r.json()
 
 @app.route("/environment/getThingStations")
 def getThingStations():
@@ -26,13 +94,18 @@ def getTelemetryByThingId(thing_id):
     result['data'] = data
     return jsonify(result)
 
-@app.route("/mobility/getTaxi")
+@app.route("/mobility/getTaxiRaw")
 def getTaxiData():
     #thing_id = request.view_args['thing_id']
     data = SocialDataService.getTaxiData()
     result = {}
     result = data
     return jsonify(result)
+
+@app.route("/mobility/getTaxiCurrentGps")
+def getTaxiData():
+    r = requests.get('http://203.154.59.55:10010/getTaxiCurrentGps')
+    return r.json()
 
 @app.route("/mobility/getTaxiDensity")
 def getTaxiDensity():
@@ -42,6 +115,9 @@ def getTaxiDensity():
     result = data
     return jsonify(result)
 
+#---------------------------------------------------------------------------------------------------
+#-------------------------SERVICE DEPENDENCIES------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 @app.route("/socialdata/date", methods=['GET'])
 def getSocialDataByStartAndEnd():
     start = request.args.get('start')
@@ -77,12 +153,6 @@ def getAllLocations():
     place = {}     
     place['place'] = SocialDataService.getAllLocations()     
     return jsonify(place)
-
-@app.route("/getLastestTweets", methods=['GET']) 
-def getLatestTweets():     
-    result = {}     
-    result = SocialDataService.getLastestTweets()     
-    return jsonify(result)
 
 @app.route("/predicted", methods=['GET'])
 def get_predicted():
