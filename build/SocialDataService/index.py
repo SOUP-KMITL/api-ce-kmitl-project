@@ -103,7 +103,7 @@ def getTaxiData():
     return jsonify(result)
 
 @app.route("/mobility/getTaxiCurrentGps")
-def getTaxiData():
+def getTaxiCurrentGps():
     r = requests.get('http://203.154.59.55:10010/getTaxiCurrentGps')
     return r.json()
 
