@@ -132,8 +132,8 @@ def getLatestTweets():
     latest_tweet = latest_tweet_collection.find({},{'_id':0})
     latest_tweet_list = []
     for t in latest_tweet:
-        tweet_list.append(t)
-    return tweet_list    
+        latest_tweet_list.append(t)
+    return latest_tweet_list    
 
 def getLatestTweetByLocation(name):
     client = MongoClient(dbName)     
