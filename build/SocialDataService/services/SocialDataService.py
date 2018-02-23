@@ -151,7 +151,7 @@ def getLatestTweetByLocation(name):
     client = MongoClient(dbName)     
     db = client['SocialData']     
     tweet_collection = db.tweet
-    place = db.place2.find({'name_id':name},{'_id':0,'name_id':1}).limit(1)
+    place = db.place2.find({'name_id':name},{'_id':0,'place_id':1}).limit(1)
     place_id = ''
     for p in place:
         place_id = p
