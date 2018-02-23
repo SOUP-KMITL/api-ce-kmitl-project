@@ -23,7 +23,7 @@ def index():
 @app.route("/facebook/getPageDetail", methods=['GET'])
 def facebookGetPageDetail():
     pageId = request.args.get('pageID')
-    r = requests.get('http://203.154.59.55:6001/facebook/getPageDetail?name='+pageID)
+    r = requests.get('http://203.154.59.55:6001/facebook/getPageDetail?pageID='+pageId)
     return jsonify(r.json())
 
 @app.route("/facebook/getUserDetail", methods=['GET'])
