@@ -88,7 +88,7 @@ data.statuses.forEach(item => {
             }
             tweet.place_id = place_id
             let count = 0
-            getLatestTweet().then((res) => { count = res })
+            getLatestTweet(place_id).then((res) => { count = res })
             console.log('count: ', count)
             if (count != 0){
                 db.latestTweet2.update({'place_id':place_id},{'id':tweet.id, 'text': tweet.text, 'created_at':tweet.created_at, 'place_id':place_id})
@@ -107,7 +107,7 @@ data.statuses.forEach(item => {
 })
 }
 
-function getLatestTweet(){
+function getLatestTweet(place_id){
     return new Promise((resolve, reject) => {
         db.latestTweet2.find({'place_id':place_id}).count((err, res) =>{
             resolve(res)
