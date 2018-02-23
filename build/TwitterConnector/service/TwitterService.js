@@ -87,7 +87,10 @@ data.statuses.forEach(item => {
                 tweet.text = item.retweeted_status.text
             }
             tweet.place_id = place_id
-            if (db.latestTweet2.find({'place_id':place_id}).count() != 0){
+            count = 0
+            getLatestTweet().then((res) => { count = res })
+            console.log('count: ', count)
+            if (count != 0){
                 db.latestTweet2.update({'place_id':place_id},{'id':tweet.id, 'text': tweet.text, 'created_at':tweet.created_at, 'place_id':place_id})
             }
             else{
@@ -102,6 +105,14 @@ data.statuses.forEach(item => {
         }
     })
 })
+}
+
+function getLatestTweet(){
+    return new Promise((resolve, reject) => {
+        db.latestTweet2.find({'place_id':place_id}).count((err, res) =>{
+            resolve(res)
+        })
+    })
 }
 
 // save tweets every 30 second
