@@ -125,7 +125,7 @@ def getAllLocations():
         place_list.append(p)
     return place_list
 
-def getLastestTweets():
+def getLatestTweets():
     client = MongoClient(dbName)     
     db = client['SocialData']     
     place_collection = db.place2
@@ -147,7 +147,7 @@ def getLastestTweets():
         tweet_list.append(tweet)
     return tweet_list    
 
-def getLastestTweetByLocation(name):
+def getLatestTweetByLocation(name):
     client = MongoClient(dbName)     
     db = client['SocialData']     
     tweet_collection = db.tweet

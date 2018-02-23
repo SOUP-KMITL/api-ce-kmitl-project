@@ -46,16 +46,16 @@ def facebookGetCommentByPostID():
     r = requests.get('http://203.154.59.55:6001/facebook/getCommentByPostID?postID='+postId)
     return jsonify(r.json())
 
-@app.route("/twitter/getLastestTweets", methods=['GET']) 
+@app.route("/twitter/getLatestTweets", methods=['GET']) 
 def getLatestTweets():     
     result = {}     
-    result = SocialDataService.getLastestTweets()     
+    result = SocialDataService.getLatestTweets()     
     return jsonify(result)
 
-@app.route("/twitter/getLastestTweetByLocation", methods=['GET']) 
-def getLastestTweetByLocation():     
+@app.route("/twitter/getLatestTweetByLocation", methods=['GET']) 
+def getLatestTweetByLocation():     
     result = {}     
-    result = SocialDataService.getLastestTweetByLocation(request.args.get('name'))     
+    result = SocialDataService.getLatestTweetByLocation(request.args.get('name'))     
     return jsonify(result)
 
 @app.route("/crowdflow/getLocations", methods=['GET'])
