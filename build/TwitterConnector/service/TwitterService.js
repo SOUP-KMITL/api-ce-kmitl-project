@@ -87,7 +87,7 @@ data.statuses.forEach(item => {
                 tweet.text = item.retweeted_status.text
             }
             tweet.place_id = place_id
-            count = 0
+            let count = 0
             getLatestTweet().then((res) => { count = res })
             console.log('count: ', count)
             if (count != 0){
