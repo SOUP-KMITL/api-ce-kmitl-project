@@ -66,4 +66,5 @@ services :
 networks:
   default:
     external:
-      name: apicekmitl_network
+#      name: apicekmitl_network
+      name: ticketing_default

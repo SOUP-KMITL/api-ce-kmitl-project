@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD . /app
 
-RUN pip install python-dateutil pymongo flask
+RUN pip install python-dateutil pymongo flask requests
 
 # Set timezone
 ENV TZ=Asia/Bangkok

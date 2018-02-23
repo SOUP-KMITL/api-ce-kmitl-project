@@ -148,7 +148,10 @@ function saveFbComment(postID) {
 const cronSaveFbUser = new cronJob('*/2 * * * *', () => {
   db.FB_COMMENT.find((err, document) => {
     document.forEach(comment => {
-      saveFbUser(comment.id)
+      if(comment.from != undefined)
+        saveFbUser(comment.from.id)
+      else
+        saveFbUser(comment.id)
     })
     console.log("save user")
   })

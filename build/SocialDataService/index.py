@@ -2,6 +2,7 @@
 from services import SocialDataService
 from flask import Flask, request, jsonify
 import json
+import requests
 import datetime
 
 app = Flask(__name__)
@@ -22,28 +23,28 @@ def index():
 @app.route("/facebook/getPageDetail", methods=['GET'])
 def facebookGetPageDetail():
     pageId = request.args.get('pageID')
-    r = requests.get('203.154.59.55:6001/facebook/getPageDetail')
-    return r.json()
+    r = requests.get('http://203.154.59.55:6001/facebook/getPageDetail')
+    return jsonify(r.json())
 
 @app.route("/facebook/getUserDetail", methods=['GET'])
 def facebookGetUserDetail():
     userId = request.args.get('userID')
-    r = requests.get('203.154.59.55:6001/facebook/getUserDetail?userID=' + userId)
-    return r.json()
+    r = requests.get('http://203.154.59.55:6001/facebook/getUserDetail?userID=' + userId)
+    return jsonify(r.json())
 
 @app.route("/facebook/getFeedByPageID", methods=['GET'])
 def facebookGetFeedByPageID():
     pageId = request.args.get('pageID')
     since = request.args.get('since')
     until = request.args.get('until')
-    r = requests.get('203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since+'$until='+until)
-    return r.json()
+    r = requests.get('http://203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since+'$until='+until)
+    return jsonify(r.json())
 
 @app.route("/facebook/getCommentByPostID", methods=['GET'])
 def facebookGetCommentByPostID():
     postId = request.args.get('postID')
-    r = requests.get('203.154.59.55:6001/facebook/getCommentByPostID?postID='+postId)
-    return r.json()
+    r = requests.get('http://203.154.59.55:6001/facebook/getCommentByPostID?postID='+postId)
+    return jsonify(r.json())
 
 @app.route("/twitter/getLastestTweets", methods=['GET']) 
 def getLatestTweets():     
@@ -59,24 +60,49 @@ def getLastestTweetByLocation():
 
 @app.route("/crowdflow/getLocations", methods=['GET'])
 def crowdflowGetLocations():
-    postId = request.args.get('postID')
-    r = requests.get('203.154.59.55:5050/facebook/getCommentByPostID?postID='+postId)
-    return r.json()
+    r = requests.get('http://203.154.59.55:5050/crowdflow/getAllLocations')
+    return jsonify(r.json())
+
+@app.route("/crowdflow/density/location", methods=['GET']) 
+def crowdflowGetLocationsByName():     
+    time = request.args.get('time')
+    name = request.args.get('name')
+    r = requests.get('http://203.154.59.55:5050/crowdflow/density?time='+time+'&location='+name)     
+    return jsonify(r.json())
 
 @app.route("/crowdflow/density/random", methods=['GET'])
 def crowdflowGetRandom():
-    r = requests.get('203.154.59.55:5050/crowdflow/random')
-    return r.json()
+    r = requests.get('http://203.154.59.55:5050/crowdflow/random')
+    return jsonify(r.json())
+
+@app.route("/crowdflow/density/location-geo", methods=['GET']) 
+def crowdflowGetLocationsByGeo():     
+    time = request.args.get('time')     
+    ll = request.args.get('latlong')     
+    r = requests.get('http://203.154.59.55:5050/crowdflow/density?time='+time+'&ll='+ll)     
+    return jsonify(r.json())
+
+@app.route("/crowdflow/density/zone", methods=['GET']) 
+def crowdflowGetLocationsByZone():     
+    time = request.args.get('time')     
+    zone = request.args.get('zone')     
+    r = requests.get('http://203.154.59.55:5050/crowdflow/density?time='+time+'&zone='+zone)     
+    return jsonify(r.json())
 
 @app.route("/sentimental/getAllLocations", methods=['GET']) 
 def sentimentalGetAllLocations():     
-    r = requests.get('203.154.59.55:5005/getAllLocations')
-    return r.json()
+    r = requests.get('http://203.154.59.55:5005/getAllLocations')
+    return jsonify(r.json())
+
+@app.route("/sentimental/query", methods=['GET']) 
+def sentimentalQuery():     
+    r = requests.get('http://203.154.59.55:5005/query')     
+    return jsonify(r.json())
 
 @app.route("/sentimental/predicted", methods=['GET'])
 def sentimentalGet_predicted():
-    r = requests.get('203.154.59.55:5005/predicted')
-    return r.json()
+    r = requests.get('http://203.154.59.55:5005/predicted')
+    return jsonify(r.json())
 
 @app.route("/environment/getThingStations")
 def getThingStations():
@@ -105,15 +131,14 @@ def getTaxiData():
 @app.route("/mobility/getTaxiCurrentGps")
 def getTaxiCurrentGps():
     r = requests.get('http://203.154.59.55:10010/getTaxiCurrentGps')
-    return r.json()
+    return jsonify(r.json())
 
-@app.route("/mobility/getTaxiDensity")
+@app.route("/mobility/getTaxiByLocation")
 def getTaxiDensity():
     #thing_id = request.view_args['thing_id']
-    data = SocialDataService.getTaxiDensity()
-    result = {}
-    result = data
-    return jsonify(result)
+    name = request.args.get('name')
+    r = requests.get('http://203.154.59.55:10010/getTaxiByLocation?name='+name)
+    return jsonify(r.json())
 
 #---------------------------------------------------------------------------------------------------
 #-------------------------SERVICE DEPENDENCIES------------------------------------------------------
