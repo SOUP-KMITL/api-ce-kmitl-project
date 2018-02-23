@@ -156,10 +156,7 @@ def getLatestTweetByLocation(name):
     for p in place:
         place_id = p['place_id']
     tweet = tweet_collection.find({"place_id": place_id},{'_id':0, 'text':1, 'created_at':1}).sort('_id',-1).limit(1)
-    tweet_list = []
-    for t in tweet:
-        tweet_list.append(t)
-    return tweet_list  
+    return t  
 
 def get_predicted():
     client = MongoClient(dbName)
