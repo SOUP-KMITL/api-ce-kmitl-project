@@ -87,20 +87,20 @@ data.statuses.forEach(item => {
                 tweet.text = item.retweeted_status.text
             }
             tweet.place_id = place_id
-            let count = 0
-            getLatestTweet(place_id).then((res) => { count = res })
-            console.log('count: ', count)
-            if (count != 0){
-                db.latestTweet2.update({'place_id':place_id},{'id':tweet.id, 'text': tweet.text, 'created_at':tweet.created_at, 'place_id':place_id})
-            }
-            else{
-                db.latestTweet2.insert({'id':tweet.id, 'text': tweet.text, 'created_at':tweet.created_at, 'place_id':place_id})
-            }
-            //postToConnector(tweet)
-            db.tweet.insert(tweet, err => {
-                if (err) {
-                    console.log(err)
+            getLatestTweet(place_id).then((count) => {
+                console.log('count: ', count)
+                if (count != 0) {
+                    db.latestTweet2.update({ 'place_id': place_id }, { 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id })
                 }
+                else {
+                    db.latestTweet2.insert({ 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id })
+                }
+                //postToConnector(tweet)
+                db.tweet.insert(tweet, err => {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
             })
         }
     })
