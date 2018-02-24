@@ -71,29 +71,24 @@ export function searchTweetNearby(lat, lng, since) {
 }
 
 function saveTweet(data, place_id) {
-data.statuses.forEach(item => {
-    db.tweet.findOne({
-        id: item.id
-    }, (err, document) => {
-        if (!document) {
-            let tweet = item
-            tweet.created_at = new Date(item.created_at)
-            tweet.user.created_at = new Date(item.user.created_at)
-            if (typeof tweet.retweeted_status != 'undefined') {
-                tweet.retweeted_status.created_at = new Date(item.retweeted_status.created_at)
-                tweet.retweeted_status.user.created_at = new Date(item.retweeted_status.user.created_at)
-            }
-            if (item.retweeted_status != null) {
-                tweet.text = item.retweeted_status.text
-            }
-            tweet.place_id = place_id
-            getLatestTweet(place_id).then((count) => {
-                console.log('count: ', count)
-                if (count != 0) {
-                    db.latestTweet2.update({ 'place_id': place_id }, { 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id })
+    data.statuses.forEach((item, index) => {
+        db.tweet.findOne({
+            id: item.id
+        }, (err, document) => {
+            if (!document) {
+                let tweet = item
+                tweet.created_at = new Date(item.created_at)
+                tweet.user.created_at = new Date(item.user.created_at)
+                if (typeof tweet.retweeted_status != 'undefined') {
+                    tweet.retweeted_status.created_at = new Date(item.retweeted_status.created_at)
+                    tweet.retweeted_status.user.created_at = new Date(item.retweeted_status.user.created_at)
                 }
-                else {
-                    db.latestTweet2.insert({ 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id })
+                if (item.retweeted_status != null) {
+                    tweet.text = item.retweeted_status.text
+                }
+                tweet.place_id = place_id
+                if (index == 0) {
+                    db.latestTweet2.update({ 'place_id': place_id }, { 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id }, { upsert: true })
                 }
                 //postToConnector(tweet)
                 db.tweet.insert(tweet, err => {
@@ -101,16 +96,8 @@ data.statuses.forEach(item => {
                         console.log(err)
                     }
                 })
-            })
-        }
-    })
-})
-}
 
-function getLatestTweet(place_id){
-    return new Promise((resolve, reject) => {
-        db.latestTweet2.find({'place_id':place_id}).count((err, res) =>{
-            resolve(res)
+            }
         })
     })
 }
