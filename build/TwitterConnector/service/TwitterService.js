@@ -88,7 +88,7 @@ function saveTweet(data, place_id) {
                 }
                 tweet.place_id = place_id
                 if (index == 0) {
-                    db.latestTweet2.update({ 'place_id': place_id }, { 'id': tweet.id, 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id }, { upsert: true })
+                    db.latestTweet2.update({ 'place_id': place_id }, { 'id': (tweet.id).toString(), 'text': tweet.text, 'created_at': tweet.created_at, 'place_id': place_id }, { upsert: true })
                 }
                 //postToConnector(tweet)
                 db.tweet.insert(tweet, err => {
