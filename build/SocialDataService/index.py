@@ -37,7 +37,12 @@ def facebookGetFeedByPageID():
     pageId = request.args.get('pageID')
     since = request.args.get('since')
     until = request.args.get('until')
-    r = requests.get('http://203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since+'&until='+until)
+    if(since == None):
+        r = requests.get('http://203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId)
+    elif(since != None and until == None):
+        r = requests.get('http://203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since)
+    else:
+        r = requests.get('http://203.154.59.55:6001/facebook/getFeedByPageID?pageID='+pageId+'&since='+ since+'&until='+until)
     return jsonify(r.json())
 
 @app.route("/facebook/getCommentByPostID", methods=['GET'])
