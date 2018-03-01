@@ -5,7 +5,7 @@
 #from pyspark.sql.types import *
 import dateutil.parser as date
 import json
-from pymongo import MongoClient 
+from pymongo import MongoClient
 from pprint import pprint
 from config import dbName
 
@@ -19,7 +19,7 @@ from config import dbName
 #sc = spark.sparkContext
 
 
-#def getSocialDataByStartAndEnd(start, end):
+# def getSocialDataByStartAndEnd(start, end):
 #    socialDataParquet = "hdfs://stack-02:9000/SocialDataRepository/SOCIALDATA.parquet"
 #    socialDataDF = spark.read.parquet(socialDataParquet)
 #    socialDataDF = socialDataDF.sort(socialDataDF.created_at.desc())
@@ -33,14 +33,15 @@ def getTweetDataByStartAndEnd(start, end):
     client = MongoClient(dbName)
     db = client['SocialData']
     tweet_collection = db.tweet
-    tweets = tweet_collection.find({"created_at": {"$gte": date.parse(start), "$lte": date.parse(end)}})
+    tweets = tweet_collection.find(
+        {"created_at": {"$gte": date.parse(start), "$lte": date.parse(end)}})
     tw_list = []
     for tw in tweets:
         del tw['_id']
         tw_list.append(tw)
     return tw_list
 
-#def getAllSocialData():
+# def getAllSocialData():
 #    socialDataParquet = "hdfs://stack-02:9000/SocialDataRepository/SOCIALDATA.parquet"
 #    socialDataDF = spark.read.parquet(socialDataParquet)
 #    socialData = socialDataDF.collect()
@@ -49,45 +50,50 @@ def getTweetDataByStartAndEnd(start, end):
 #        sd_list.append(sd.asDict())
 #    return sd_list
 
+
 def getThingStations():
     client = MongoClient(dbName)
     db = client['Environment']
     collection = db.ThingStation
-    data = collection.find({},{'_id':0})
+    data = collection.find({}, {'_id': 0})
     data_list = []
     for item in data:
-    	data_list.append(item)
+        data_list.append(item)
     return data_list
+
 
 def getTelemetryByThingId():
     client = MongoClient(dbName)
     db = client['Environment']
     collection = db.ThingTelemetry
-    data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
+    data = collection.find({}, {'_id': 0}).sort("_id", -1).limit(1)
     data_list = []
     for item in data:
-    	data_list.append(item)
+        data_list.append(item)
     return data_list
+
 
 def getTaxiData():
     client = MongoClient(dbName)
     db = client['SmartMobility']
     collection = db.taxiData
-    data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
+    data = collection.find({}, {'_id': 0}).sort("_id", -1).limit(1)
     data_list = []
     for item in data:
-    	data_list.append(item)
+        data_list.append(item)
     return data_list
+
 
 def getTaxiDensity():
     client = MongoClient(dbName)
     db = client['SmartMobility']
     collection = db.taxiDensity
-    data = collection.find({},{'_id':0}).sort("_id", -1).limit(1)
+    data = collection.find({}, {'_id': 0}).sort("_id", -1).limit(1)
     data_list = []
     for item in data:
-    	data_list.append(item)
+        data_list.append(item)
     return data_list
+
 
 def getAllQuery():
     client = MongoClient(dbName)
@@ -100,20 +106,22 @@ def getAllQuery():
         query_list.append(q)
     return query_list
 
+
 def getPlaceById(place_id):
     client = MongoClient(dbName)
     db = client['SocialData']
     place_collection = db.place2
-    place = place_collection.find({"place_id":place_id})
+    place = place_collection.find({"place_id": place_id})
     place_list = []
     for p in place:
         del p['_id']
-    	place_list.append(p)
+        place_list.append(p)
     return place_list
 
+
 def getAllLocations():
-    client = MongoClient(dbName)     
-    db = client['SocialData']     
+    client = MongoClient(dbName)
+    db = client['SocialData']
     place_collection = db.place2
     place = place_collection.find()
     place_list = []
@@ -125,56 +133,67 @@ def getAllLocations():
         place_list.append(p)
     return place_list
 
+
 def getLatestTweets():
-    client = MongoClient(dbName)     
-    db = client['SocialData']     
+    client = MongoClient(dbName)
+    db = client['SocialData']
     latest_tweet_collection = db.latestTweet2
-    latest_tweet = latest_tweet_collection.find({},{'_id':0})
+    latest_tweet = latest_tweet_collection.find({}, {'_id': 0})
     latest_tweet_list = []
     for t in latest_tweet:
         latest_tweet_list.append(t)
-    return latest_tweet_list    
+    return latest_tweet_list
+
 
 def getLatestTweetsTemp():
-    client = MongoClient(dbName)     
-    db = client['SocialData']     
+    client = MongoClient(dbName)
+    db = client['SocialData']
     latest_tweet_collection = db.latestTweet2
-    latest_tweet = latest_tweet_collection.find({},{'_id':0})
+    latest_tweet = latest_tweet_collection.find({}, {'_id': 0})
     place_collection = db.place2
     latest_tweet_list = []
     for t in latest_tweet:
-        place = place_collection.find({'place_id':t['place_id']},{'_id':0,'lat':1,'lng':1})
+        place = place_collection.find({'place_id': t['place_id']}, {
+                                      '_id': 0, 'geolocation': 1})
         for p in place:
-            t['latitude'] = p['lat']
-            t['longitude'] = p['lng']
+            coord = (p['geolocation']).split(",")
+            t['latitude'] = coord[0]
+            t['longitude'] = coord[1]
         latest_tweet_list.append(t)
-    return latest_tweet_list  
+    return latest_tweet_list
+
 
 def getLatestTweetByLocation(name):
-    client = MongoClient(dbName)     
-    db = client['SocialData']     
+    client = MongoClient(dbName)
+    db = client['SocialData']
     tweet_collection = db.tweet
-    place = db.place2.find({'name_id':name},{'_id':0,'place_id':1}).limit(1)
+    place = db.place2.find({'name_id': name}, {
+                           '_id': 0, 'place_id': 1}).limit(1)
     place_id = ''
     for p in place:
         place_id = p['place_id']
-    tweet = tweet_collection.find({"place_id": place_id},{'_id':0, 'text':1, 'created_at':1}).sort('_id',-1).limit(1)
-     
-    return tweet[0] 
+    tweet = tweet_collection.find({"place_id": place_id}, {
+                                  '_id': 0, 'text': 1, 'created_at': 1}).sort('_id', -1).limit(1)
+
+    return tweet[0]
+
 
 def get_predicted():
     client = MongoClient(dbName)
     db = client['SocialData']
     predicted_collection = db.predicted
-    predicted = predicted_collection.find({'predicted':{'$gt':[]}}).sort("_id", -1).limit(1)
+    predicted = predicted_collection.find(
+        {'predicted': {'$gt': []}}).sort("_id", -1).limit(1)
     for p in predicted:
         predicted = p
     del predicted['_id']
     return predicted
 
+
 def save_predicted(predicted):
     client = MongoClient(dbName)
     db = client['SocialData']
     predicted_collection = db.predicted
-    result = predicted_collection.insert_one({'id': predicted['id'], 'predicted': predicted['predicted']}).inserted_id
+    result = predicted_collection.insert_one(
+        {'id': predicted['id'], 'predicted': predicted['predicted']}).inserted_id
     return result
