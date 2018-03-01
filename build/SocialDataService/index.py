@@ -57,6 +57,12 @@ def getLatestTweets():
     result = SocialDataService.getLatestTweets()     
     return jsonify(result)
 
+@app.route("/twitter/getLatestTweetsTemp", methods=['GET']) 
+def getLatestTweetsTemp():     
+    result = {}     
+    result = SocialDataService.getLatestTweetsTemp()     
+    return jsonify(result)
+
 @app.route("/twitter/getLatestTweetByLocation", methods=['GET']) 
 def getLatestTweetByLocation():     
     result = {}     

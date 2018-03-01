@@ -135,6 +135,21 @@ def getLatestTweets():
         latest_tweet_list.append(t)
     return latest_tweet_list    
 
+def getLatestTweetsTemp():
+    client = MongoClient(dbName)     
+    db = client['SocialData']     
+    latest_tweet_collection = db.latestTweet2
+    latest_tweet = latest_tweet_collection.find({},{'_id':0})
+    place_collection = db.place2
+    latest_tweet_list = []
+    for t in latest_tweet:
+        place = place_collection.find({'place_id':t.place_id},{'_id':0,'lat':1,'lng':1})
+        for p in place:
+            t.latitude = p.lat
+            t.longitude = p.lng
+        latest_tweet_list.append(t)
+    return latest_tweet_list  
+
 def getLatestTweetByLocation(name):
     client = MongoClient(dbName)     
     db = client['SocialData']     
