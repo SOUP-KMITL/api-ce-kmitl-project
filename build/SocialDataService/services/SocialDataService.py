@@ -145,8 +145,8 @@ def getLatestTweetsTemp():
     for t in latest_tweet:
         place = place_collection.find({'place_id':t['place_id']},{'_id':0,'lat':1,'lng':1})
         for p in place:
-            t.latitude = p.lat
-            t.longitude = p.lng
+            t['latitude'] = p.['lat']
+            t['longitude'] = p.['lng']
         latest_tweet_list.append(t)
     return latest_tweet_list  
 
